@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.fiap.model.ProdutoModel;
 import br.com.fiap.repository.ProdutoRepository;
@@ -14,7 +15,7 @@ import br.com.fiap.repository.ProdutoRepository;
 @Controller
 public class ProdutoController {
 
-	private ProdutoRepository produtoRepository = new ProdutoRepository();
+	private ProdutoRepository produtoRepository = ProdutoRepository.getInstance();
 	
 	// Busca
 	@RequestMapping(value = "/produto", method = RequestMethod.GET)
@@ -43,11 +44,12 @@ public class ProdutoController {
 	}
 	
 	@RequestMapping(value = "/produto/new", method = RequestMethod.POST)
-	public String save(ProdutoModel produtoModel) {
+	public String save(ProdutoModel produtoModel, RedirectAttributes redirectAttributes ) {
 		
 		produtoRepository.save(produtoModel);
+		redirectAttributes.addFlashAttribute("messages", "Produto cadastrado com sucesso");
 		
-		return "produto-novo-sucesso";
+		return "redirect:/produto";
 	}
 	
 	@RequestMapping(value = "/produto/update/{id}", method = RequestMethod.GET)
@@ -59,23 +61,25 @@ public class ProdutoController {
 	}
 	
 	@RequestMapping(value = "/produto/update", method = RequestMethod.POST)
-	public String updateProduto(ProdutoModel produtoModel, Model model) {
+	public String updateProduto(ProdutoModel produtoModel, RedirectAttributes redirectAttributes) {
 		
 		produtoRepository.update(produtoModel);
+		redirectAttributes.addFlashAttribute("messages", "Produto alterado com sucesso");
 		
-		model.addAttribute("produtos", produtoRepository.findAll());
-		
-		return "produtos";
+		return "redirect:/produto";
 	}
 	
-	@RequestMapping(value = "/produto/delete/{id}")
-	public String deleteProduto(@PathVariable("id") long id, Model model) {
+	@RequestMapping(value = "/produto/delete/{id}", method = RequestMethod.DELETE)
+	public String deleteProduto(@PathVariable("id") long id, RedirectAttributes redirectAttributes) {
 		
-		produtoRepository.delete(id);			
+		produtoRepository.deleteById(id);			
 		
-		model.addAttribute("produtos", produtoRepository.findAll());
+		// Sem mais necessidade, pois há um redirect	
+		//model.addAttribute("produtos", produtoRepository.findAll());
 		
-		return "produtos";
+		redirectAttributes.addFlashAttribute("messages", "Produto deletado com sucesso");
+		
+		return "redirect:/produto";
 	}
 
 }

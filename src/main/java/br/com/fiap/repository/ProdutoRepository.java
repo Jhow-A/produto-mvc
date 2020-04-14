@@ -12,7 +12,9 @@ public class ProdutoRepository {
 	//Map que simula o banco de dados
 	private static Map<Long, ProdutoModel> produtos;
 	
-	public ProdutoRepository() {
+	private static ProdutoRepository instance;
+	
+	private ProdutoRepository() {
 		produtos = new HashMap<Long, ProdutoModel>();
 		
 		//Populando "banco de dados"
@@ -24,6 +26,13 @@ public class ProdutoRepository {
 				10.50, "Um produto muito bom!"));
 	}
 
+	public static ProdutoRepository getInstance() {
+		if (instance == null) {
+			instance = new ProdutoRepository();
+		}		
+		
+		return instance;
+	}
 	
 	public List<ProdutoModel> findAll() {
 		return new ArrayList<ProdutoModel>(produtos.values());
@@ -44,7 +53,7 @@ public class ProdutoRepository {
 		produtos.put(produto.getId(), produto);
 	}
 	
-	public void delete(long id) {
+	public void deleteById(long id) {
 		produtos.remove(id);
 	}
 }

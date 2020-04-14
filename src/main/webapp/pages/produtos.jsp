@@ -3,6 +3,7 @@
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html>
@@ -41,9 +42,10 @@
 				<h1>Produtos</h1>
 
 				<p class="toolbar">
-
 					<a class="create btn btn-default" href="${contextPath}/produto/new">Novo
-						Produto</a> <span class="alert"></span>
+						Produto</a>
+					
+					<c:if test="${not empty messages}"> <h3 class="alert alert-warning">${messages}</h3> </c:if>
 				</p>
 
 				<table class="table table-striped" cellspacing="0" cellpadding="0">
@@ -62,18 +64,17 @@
 								<td>${produto.nome}</td>
 								<td>${produto.preco}</td>
 
-								<td class="actions">
-
-									<form action="XXXXXX" method="get">
+								<td class="actions"><form:form
+										action="${contextPath}/produto/delete/${produto.id}"
+										method="delete">
 
 										<a class="btn btn-success btn-xs"
-											href="${contextPath}/produto/${produto.id}">Detalhes</a> <a
-											class="btn btn-warning btn-xs"
+											href="${contextPath}/produto/${produto.id}">Detalhes</a>
+										<a class="btn btn-warning btn-xs"
 											href="${contextPath}/produto/update/${produto.id}">Editar</a>
-										<a href="${contextPath}/produto/delete/${produto.id}" class="btn btn-danger btn-xs">Excluir</a>
-									</form>
-
-								</td>
+										<input type="submit" class="btn btn-danger btn-xs"
+											value="Excluir" />
+									</form:form></td>
 							</tr>
 
 						</c:forEach>
