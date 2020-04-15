@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html>
 <html>
 
@@ -39,35 +41,34 @@
 					
 					<h2>Produto</h2>
 					
-					<form action="${contextPath}/produto/new" method="post">
-					
+					<form:form modelAttribute="produtoModel"  action="${contextPath}/produto/new" method="post">					
 						<div class="form-group">
 							<label class="control-label" for="nome">Nome:</label>
-							<input type="text" name="nome" id="nome" value="" class="form-control" maxlength="50" size="50" />
-							<font color="red"></font><br/>
+							<form:input path="nome" type="text" name="nome" id="nome" value="" class="form-control" maxlength="50" size="50" />
+							<font color="red"><form:errors path="nome"></form:errors></font><br/>
                         </div>
                         <div class="form-group">
 							<label class="control-label" for="nome">SKU:</label>
-							<input id="sku" name="sku" value="" class="form-control" maxlength="50" size="50" />
-							<font color="red"></font><br/>
+							<form:input path="sku" id="sku" name="sku" value="" class="form-control" maxlength="50" size="50" />
+							<font color="red"><form:errors path="sku"></form:errors></font><br/>
 						</div>
 						
 						<div class="form-group">
 							<label class="control-label" for="descricao">Descrição:</label>
-							<textarea class="form-control" name="descricao" rows="4" cols="100"></textarea>
-							<font color="red"></font><br/>
+							<form:textarea path="descricao" class="form-control" name="descricao" rows="4" cols="100"></form:textarea>
+							<font color="red"><form:errors path="descricao"></form:errors></font><br/>
 						</div>
 						
 						<div class="form-group">
 							<label class="control-label" for="preco">Preço:</label>
-							<input type="text" id="preco" name="preco" class="form-control" />
-							<font color="red"></font><br/>
+							<form:input path="preco"  type="text" id="preco" name="preco" class="form-control" />
+							<font color="red"><form:errors path="preco"></form:errors></font><br/>
 						</div>
 						
 						<div class="form-group">
 							<label class="control-label" for="caracteristica">Características:</label>
-							<textarea id="caracteristica" class="form-control" name="caracteristicas" rows="4" cols="100"></textarea>
-							<font color="red"></font><br/>
+							<form:textarea path="caracteristicas" id="caracteristica" class="form-control" name="caracteristicas" rows="4" cols="100"></form:textarea >
+							<font color="red"><form:errors path="caracteristicas"></form:errors></font><br/>
 						</div>
 						<hr>
 						
@@ -76,9 +77,7 @@
                             
                         <br>
                         <br>
-					</form>
-					
-					
+					</form:form>									
                 </div>
             </div>
         </div>

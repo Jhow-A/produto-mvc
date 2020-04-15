@@ -1,12 +1,27 @@
 package br.com.fiap.model;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class ProdutoModel {
 
 	private Long id;
+	
+	@NotBlank(message = "Por favor, preencha o nome!")
 	private String nome;
+	
 	private String sku;
+	
+	@Size(min = 1, max = 100)
 	private String descricao;
+	
+	@DecimalMin(value = "0.1", message = "Valor não pode ser menor que R$ 0,10")
 	private Double preco;
+	
+	@NotEmpty
+	@NotBlank
 	private String caracteristicas;
 
 	public ProdutoModel(Long id, String nome, String sku, String descricao, Double preco, String caracteristicas) {

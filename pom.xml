@@ -71,6 +71,18 @@
 			<version>1.2</version>
 		</dependency>
 
+		<!-- BEAN VALIDATION -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.0.16.Final</version>
+		</dependency>
+
 	</dependencies>
 
 </project>
