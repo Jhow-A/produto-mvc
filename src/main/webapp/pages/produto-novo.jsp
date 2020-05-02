@@ -41,7 +41,7 @@
 					
 					<h2>Produto</h2>
 					
-					<form:form modelAttribute="produtoModel"  action="${contextPath}/produto/new" method="post">					
+					<form:form modelAttribute="produtoModel"  action="${contextPath}/produto" method="post">					
 						<div class="form-group">
 							<label class="control-label" for="nome">Nome:</label>
 							<form:input path="nome" type="text" name="nome" id="nome" value="" class="form-control" maxlength="50" size="50" />

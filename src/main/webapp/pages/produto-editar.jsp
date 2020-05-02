@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html>
@@ -42,7 +43,7 @@
 					
 					<h2>Produto</h2>
 					
-					<form action="${contextPath}/produto/update" method="post">
+					<form:form action="${contextPath}/produto/" method="put">
 					
 						<div class="form-group">
 							<input type="hidden" name="id" id="id" value="${produto.id}" />
@@ -79,7 +80,7 @@
                             
                         <br>
                         <br>
-					</form>
+					</form:form>
 					
                 </div>
             </div>

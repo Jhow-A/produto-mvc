@@ -29,7 +29,7 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="${contextPath}/produtos">Produtos</a></li>
+					<li><a href="${contextPath}/produto">Produtos</a></li>
 				</ul>
 			</div>
 		</div>
@@ -42,10 +42,12 @@
 				<h1>Produtos</h1>
 
 				<p class="toolbar">
-					<a class="create btn btn-default" href="${contextPath}/produto/new">Novo
+					<a class="create btn btn-default" href="${contextPath}/produto/form?page=produto-novo">Novo
 						Produto</a>
-					
-					<c:if test="${not empty messages}"> <h3 class="alert alert-warning">${messages}</h3> </c:if>
+
+					<c:if test="${not empty messages}">
+						<h3 class="alert alert-warning">${messages}</h3>
+					</c:if>
 				</p>
 
 				<table class="table table-striped" cellspacing="0" cellpadding="0">
@@ -65,18 +67,17 @@
 								<td>${produto.preco}</td>
 
 								<td class="actions"><form:form
-										action="${contextPath}/produto/delete/${produto.id}"
+										action="${contextPath}/produto/${produto.id}"
 										method="delete">
 
 										<a class="btn btn-success btn-xs"
 											href="${contextPath}/produto/${produto.id}">Detalhes</a>
 										<a class="btn btn-warning btn-xs"
-											href="${contextPath}/produto/update/${produto.id}">Editar</a>
+											href="${contextPath}/produto/form?page=produto-editar&id=${produto.id}">Editar</a>
 										<input type="submit" class="btn btn-danger btn-xs"
 											value="Excluir" />
 									</form:form></td>
 							</tr>
-
 						</c:forEach>
 					</tbody>
 				</table>

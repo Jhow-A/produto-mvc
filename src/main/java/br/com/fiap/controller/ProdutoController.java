@@ -7,22 +7,40 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.fiap.model.ProdutoModel;
 import br.com.fiap.repository.ProdutoRepository;
 
 @Controller
+@RequestMapping("/produto")
 public class ProdutoController {
 
 	private ProdutoRepository produtoRepository = ProdutoRepository.getInstance();
+	
+	// ABERTURA DE FORMULÁRIO
+	@GetMapping("/form")
+	public String open(@RequestParam String page, @RequestParam(required = false) Long id,
+			@ModelAttribute("produtoModel") ProdutoModel produtoModel, Model model) {
 
-	// Busca
-	@RequestMapping(value = "/produto", method = RequestMethod.GET)
+		// page.equals("produto-editar")
+		if ("produto-editar".equals(page)) {
+			model.addAttribute("produto", produtoRepository.findById(id));
+		}
+
+		return page;
+	}
+	
+	// CONSULTAS
+	@GetMapping()
 	public String findAll(Model model) {
 
 		List<ProdutoModel> listaDosProdutos = produtoRepository.findAll();
@@ -32,7 +50,8 @@ public class ProdutoController {
 		return "produtos";
 	}
 
-	@RequestMapping(value = "/produto/{id}", method = RequestMethod.GET)
+	// @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}")
 	public String findById(@PathVariable("id") long id, Model model) {
 
 		ProdutoModel produtoEncontrado = produtoRepository.findById(id);
@@ -42,34 +61,22 @@ public class ProdutoController {
 		return "produto-detalhe";
 	}
 
-	@RequestMapping(value = "/produto/new", method = RequestMethod.GET)
-	public String form(@ModelAttribute("produtoModel") ProdutoModel model) {
-		return "produto-novo";
-	}
-
-	@RequestMapping(value = "/produto/new", method = RequestMethod.POST)
+	// INSERÇÕES E ALTERAÇÕES
+	@PostMapping()
 	public String save(@Valid ProdutoModel produtoModel, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
 
 		if (bindingResult.hasErrors()) {
-			return "produto-novo";	
+			return "produto-novo";
 		}
 
 		produtoRepository.save(produtoModel);
-		redirectAttributes.addFlashAttribute("messages", "Produto cadastrado com sucesso");	
+		redirectAttributes.addFlashAttribute("messages", "Produto cadastrado com sucesso");
 
 		return "redirect:/produto";
 	}
 
-	@RequestMapping(value = "/produto/update/{id}", method = RequestMethod.GET)
-	public String update(@PathVariable("id") long id, Model model) {
-
-		model.addAttribute("produto", produtoRepository.findById(id));
-
-		return "produto-editar";
-	}
-
-	@RequestMapping(value = "/produto/update", method = RequestMethod.POST)
+	@PutMapping()
 	public String updateProduto(ProdutoModel produtoModel, RedirectAttributes redirectAttributes) {
 
 		produtoRepository.update(produtoModel);
@@ -78,7 +85,8 @@ public class ProdutoController {
 		return "redirect:/produto";
 	}
 
-	@RequestMapping(value = "/produto/delete/{id}", method = RequestMethod.DELETE)
+	// EXCLUSÕES
+	@DeleteMapping("/{id}")
 	public String deleteProduto(@PathVariable("id") long id, RedirectAttributes redirectAttributes) {
 
 		produtoRepository.deleteById(id);
