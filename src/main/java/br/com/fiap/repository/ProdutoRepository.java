@@ -1,58 +1,49 @@
 package br.com.fiap.repository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
 import br.com.fiap.model.ProdutoModel;
 
+@Repository
 public class ProdutoRepository {
-	
-	//Map que simula o banco de dados
+
+	@Autowired // Injeta a dependencia do Spring do tipo JdbcTemplate
+	private JdbcTemplate jdbcTemplate;
 	private static Map<Long, ProdutoModel> produtos;
-	
-	private static ProdutoRepository instance;
-	
-	private ProdutoRepository() {
-		produtos = new HashMap<Long, ProdutoModel>();
-		
-		//Populando "banco de dados"
-		produtos.put(1L, new ProdutoModel(1L, "Produto 1", "Sku-01", "Desc Produto 1", 
-				10.50, "Um produto muito bom!"));
-		produtos.put(2L, new ProdutoModel(2L, "Produto 2", "Sku-02", "Desc Produto 2", 
-				54.50, "Um produto muito bom!"));
-		produtos.put(3L, new ProdutoModel(3L, "Produto 3", "Sku-03", "Desc Produto 3", 
-				10.50, "Um produto muito bom!"));
+
+	public ProdutoRepository() {
+
 	}
 
-	public static ProdutoRepository getInstance() {
-		if (instance == null) {
-			instance = new ProdutoRepository();
-		}		
-		
-		return instance;
-	}
-	
 	public List<ProdutoModel> findAll() {
-		return new ArrayList<ProdutoModel>(produtos.values());
+
+		List<ProdutoModel> produtos = jdbcTemplate.query("SELECT * FROM TB_PRODUTO",
+				new BeanPropertyRowMapper<ProdutoModel>(ProdutoModel.class));
+		return produtos;
 	}
-	
+
 	public ProdutoModel findById(long id) {
 		return produtos.get(id);
 	}
-	
+
 	public void save(ProdutoModel produto) {
-		 Long newId = (long) (produtos.size() + 1);
-		 produto.setId(newId);
-		 produtos.put(newId, produto);
-		 
+		jdbcTemplate.update("INSERT INTO TB_PRODUTO (NOME, SKU, DESCRICAO, PRECO, CARACTERISTICAS) VALUES (?,?,?,?,?)",
+				produto.getNome(), produto.getSku(), produto.getDescricao(), produto.getPreco(),
+				produto.getCaracteristicas());
+
 	}
-	
+
 	public void update(ProdutoModel produto) {
 		produtos.put(produto.getId(), produto);
 	}
-	
+
 	public void deleteById(long id) {
 		produtos.remove(id);
 	}

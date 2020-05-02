@@ -24,6 +24,8 @@ public class ProdutoModel {
 	@NotBlank
 	private String caracteristicas;
 
+	public ProdutoModel() {}
+	
 	public ProdutoModel(Long id, String nome, String sku, String descricao, Double preco, String caracteristicas) {
 		super();
 		this.id = id;
