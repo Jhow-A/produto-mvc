@@ -10,7 +10,7 @@
 
 <head>
 
-<title>Produtos - Listagem</title>
+<title>Categorias - Listagem</title>
 
 <spring:url value="/resources/css" var="css" />
 <spring:url value="/resource/js" var="js" />
@@ -30,7 +30,6 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="${contextPath}/produto">Produtos</a></li>
-					<li><a href="${contextPath}/categoria">Categorias</a></li>
 				</ul>
 			</div>
 		</div>
@@ -40,11 +39,11 @@
 		<div class="row">
 			<div class="col-md-12">
 
-				<h1>Produtos</h1>
+				<h1>Categorias</h1>
 
 				<p class="toolbar">
-					<a class="create btn btn-default" href="${contextPath}/produto/form?page=produto-novo">Novo
-						Produto</a>
+					<a class="create btn btn-default" href="${contextPath}/categoria/form?page=categoria-nova">Nova
+						Categoria</a>
 
 					<c:if test="${not empty messages}">
 						<h3 class="alert alert-warning">${messages}</h3>
@@ -55,26 +54,24 @@
 					<thead>
 						<tr>
 							<th data-field="name">Nome</th>
-							<th data-field="forks_count">Preço</th>
 							<th class="actions" width="220">Ações</th>
 						</tr>
 					</thead>
 					<tbody>
 
-						<c:forEach items="${produtos}" var="produto">
+						<c:forEach items="${categorias}" var="categoria">
 
 							<tr>
-								<td>${produto.nome}</td>
-								<td>${produto.preco}</td>
+								<td>${categoria.nomeCategoria}</td>
 
 								<td class="actions"><form:form
-										action="${contextPath}/produto/${produto.id}"
+										action="${contextPath}/categoria/${categoria.idCategoria}"
 										method="delete">
 
 										<a class="btn btn-success btn-xs"
-											href="${contextPath}/produto/${produto.id}">Detalhes</a>
+											href="${contextPath}/categoria/${categoria.idCategoria}">Detalhes</a>
 										<a class="btn btn-warning btn-xs"
-											href="${contextPath}/produto/form?page=produto-editar&id=${produto.id}">Editar</a>
+											href="${contextPath}/categoria/form?page=categoria-editar&id=${categoria.idCategoria}">Editar</a>
 										<input type="submit" class="btn btn-danger btn-xs"
 											value="Excluir" />
 									</form:form></td>

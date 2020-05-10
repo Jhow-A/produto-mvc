@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html>
 
 <head>
 
-    <title>Produtos - Cadastro com Sucesso</title>
+    <title>Categorias - Cadastro</title>
     
     <spring:url value="/resources/css" var="css"/>
     <spring:url value="/resources/js" var="js"/>
@@ -34,18 +35,35 @@
     </nav>
     
     <div class="container">
-
-        <!-- Call to Action Well -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="well">
 					
-					<h2>Produto</h2>
+					<h2>Categoria</h2>
 					
-					<div class="alert alert-warning" role="alert">
-                        <h3>Produto cadastrado com sucesso</h3>
-                    </div>
-                    
+					<form:form modelAttribute="categoriaModel" action="${contextPath}/categoria" method="post">
+					
+						<spring:hasBindErrors name="categoriaModel">
+							<div class="alert alert-danger" role="alert">
+								<form:errors path="*" class="has-error" />
+							</div>
+						</spring:hasBindErrors>
+					
+						<div class="form-group">
+							<label class="control-label" for="nomeCategoria">Nome:</label>
+							<form:input type="text" path="nomeCategoria" id="nomeCategoria" value="" class="form-control" maxlength="50" size="50" />
+							<font color="red"><form:errors path="nomeCategoria"/></font><br/>
+                        </div>
+                        
+						<hr>
+						
+						<a class="btn btn-default btn-lg" href="${contextPath}/categoria">Cancelar</a>
+						<button type="submit" class="btn btn-primary btn-lg">Gravar</button>
+                            
+                        <br>
+                        <br>
+					</form:form>
+					
                 </div>
             </div>
         </div>

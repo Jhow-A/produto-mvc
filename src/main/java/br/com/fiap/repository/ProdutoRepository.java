@@ -14,37 +14,51 @@ import br.com.fiap.model.ProdutoModel;
 @Repository
 public class ProdutoRepository {
 
-	@Autowired // Injeta a dependencia do Spring do tipo JdbcTemplate
+	private static final String GET_ALL = "SELECT * FROM TB_PRODUTO";
+	private static final String GET = "SELECT * FROM TB_PRODUTO WHERE ID = ?";
+	private static final String SAVE = "INSERT INTO TB_PRODUTO (NOME, SKU, DESCRICAO, CARACTERISTICAS, PRECO) VALUES (?, ?, ?, ?, ?)";
+	private static final String UPDATE = "UPDATE TB_PRODUTO SET NOME = ?, SKU = ?, DESCRICAO = ?, CARACTERISTICAS = ?, PRECO = ? WHERE ID = ?";
+	private static final String DELETE = "DELETE FROM TB_PRODUTO WHERE ID = ?";
+	
+	@Autowired // Injeta a dependencia do Spring do tipo JdbcTemplate, ele mesmo buca a instância
 	private JdbcTemplate jdbcTemplate;
-	private static Map<Long, ProdutoModel> produtos;
-
+	
 	public ProdutoRepository() {
 
 	}
 
 	public List<ProdutoModel> findAll() {
 
-		List<ProdutoModel> produtos = jdbcTemplate.query("SELECT * FROM TB_PRODUTO",
-				new BeanPropertyRowMapper<ProdutoModel>(ProdutoModel.class));
+		List<ProdutoModel> produtos = this.jdbcTemplate.query(GET_ALL, new BeanPropertyRowMapper<ProdutoModel>(ProdutoModel.class));
 		return produtos;
 	}
 
 	public ProdutoModel findById(long id) {
-		return produtos.get(id);
+
+		ProdutoModel produto = this.jdbcTemplate.queryForObject(GET, new BeanPropertyRowMapper<ProdutoModel>(ProdutoModel.class), id);
+		return produto;
 	}
 
-	public void save(ProdutoModel produto) {
-		jdbcTemplate.update("INSERT INTO TB_PRODUTO (NOME, SKU, DESCRICAO, PRECO, CARACTERISTICAS) VALUES (?,?,?,?,?)",
-				produto.getNome(), produto.getSku(), produto.getDescricao(), produto.getPreco(),
-				produto.getCaracteristicas());
-
+	public void save(ProdutoModel produtoModel) {
+		this.jdbcTemplate.update(SAVE, 
+				produtoModel.getNome(), 
+				produtoModel.getSku(), 
+				produtoModel.getDescricao(),
+				produtoModel.getCaracteristicas(), 
+				produtoModel.getPreco());
 	}
 
-	public void update(ProdutoModel produto) {
-		produtos.put(produto.getId(), produto);
+	public void update(ProdutoModel produtoModel) {
+		this.jdbcTemplate.update(UPDATE, 
+				produtoModel.getNome(), 
+				produtoModel.getSku(), 
+				produtoModel.getDescricao(),
+				produtoModel.getCaracteristicas(), 
+				produtoModel.getPreco(), 
+				produtoModel.getId());
 	}
 
 	public void deleteById(long id) {
-		produtos.remove(id);
+		this.jdbcTemplate.update(DELETE, id);
 	}
 }
