@@ -43,7 +43,7 @@
 					
 					<h2>Produto</h2>
 					
-					<form:form action="${contextPath}/produto/" method="put">
+					<form:form action="${contextPath}/produto/${produtoModel.id}" method="put">
 					
 						<div class="form-group">
 							<input type="hidden" name="id" id="id" value="${produto.id}" />
@@ -60,17 +60,17 @@
 						</div>
 						
 						<div class="form-group">
-							<label class="control-label" for="mesnagem">Descrição:</label>
+							<label class="control-label" for="mesnagem">DescriÃ§Ã£o:</label>
 							<textarea id="descricao" class="form-control" name="descricao" rows="4" cols="100">${produto.descricao}</textarea>
 						</div>
 						
 						<div class="form-group">
-							<label class="control-label" for="preco">Preço:</label>
+							<label class="control-label" for="preco">PreÃ§o:</label>
 							<input type="text" name="preco" id="preco" value="${produto.preco}" class="form-control" maxlength="14" size="15" />
 						</div>
 						
 						<div class="form-group">
-							<label class="control-label" for="mesnagem">Características:</label>
+							<label class="control-label" for="mesnagem">CaracterÃ­sticas:</label>
 							<textarea id="mensagem" class="form-control" name="caracteristicas" rows="4" cols="100">${produto.caracteristicas}</textarea>
 						</div>
 						<hr>

@@ -14,13 +14,13 @@ import br.com.fiap.model.ProdutoModel;
 @Repository
 public class ProdutoRepository {
 
-	private static final String GET_ALL = "SELECT * FROM TB_PRODUTO";
+	private static final String GET_ALL = "SELECT * FROM TB_PRODUTO P INNER JOIN TB_CATEGORIA C ON ( P.ID_CATEGORIA = C.ID_CATEGORIA)";
 	private static final String GET = "SELECT * FROM TB_PRODUTO WHERE ID = ?";
-	private static final String SAVE = "INSERT INTO TB_PRODUTO (NOME, SKU, DESCRICAO, CARACTERISTICAS, PRECO) VALUES (?, ?, ?, ?, ?)";
+	private static final String SAVE = "INSERT INTO TB_PRODUTO (NOME, SKU, DESCRICAO, CARACTERISTICAS, PRECO, ID_CATEGORIA) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE = "UPDATE TB_PRODUTO SET NOME = ?, SKU = ?, DESCRICAO = ?, CARACTERISTICAS = ?, PRECO = ? WHERE ID = ?";
 	private static final String DELETE = "DELETE FROM TB_PRODUTO WHERE ID = ?";
 	
-	@Autowired // Injeta a dependencia do Spring do tipo JdbcTemplate, ele mesmo buca a instância
+	@Autowired // Injeta a dependencia do Spring do tipo JdbcTemplate, ele mesmo busca a instância
 	private JdbcTemplate jdbcTemplate;
 	
 	public ProdutoRepository() {
@@ -29,7 +29,7 @@ public class ProdutoRepository {
 
 	public List<ProdutoModel> findAll() {
 
-		List<ProdutoModel> produtos = this.jdbcTemplate.query(GET_ALL, new BeanPropertyRowMapper<ProdutoModel>(ProdutoModel.class));
+		List<ProdutoModel> produtos = this.jdbcTemplate.query(GET_ALL, new ProdutoRowMapper());
 		return produtos;
 	}
 
@@ -45,7 +45,8 @@ public class ProdutoRepository {
 				produtoModel.getSku(), 
 				produtoModel.getDescricao(),
 				produtoModel.getCaracteristicas(), 
-				produtoModel.getPreco());
+				produtoModel.getPreco(),
+				produtoModel.getCategoria().getIdCategoria());
 	}
 
 	public void update(ProdutoModel produtoModel) {

@@ -43,7 +43,8 @@
 				<h1>Produtos</h1>
 
 				<p class="toolbar">
-					<a class="create btn btn-default" href="${contextPath}/produto/form?page=produto-novo">Novo
+					<a class="create btn btn-default"
+						href="${contextPath}/produto/form?page=produto-novo">Novo
 						Produto</a>
 
 					<c:if test="${not empty messages}">
@@ -55,6 +56,7 @@
 					<thead>
 						<tr>
 							<th data-field="name">Nome</th>
+							<th data-field="categoria">Categoria</th>
 							<th data-field="forks_count">Preço</th>
 							<th class="actions" width="220">Ações</th>
 						</tr>
@@ -65,11 +67,11 @@
 
 							<tr>
 								<td>${produto.nome}</td>
+								<td>${produto.categoria.nomeCategoria}</td>
 								<td>${produto.preco}</td>
 
 								<td class="actions"><form:form
-										action="${contextPath}/produto/${produto.id}"
-										method="delete">
+										action="${contextPath}/produto/${produto.id}" method="delete">
 
 										<a class="btn btn-success btn-xs"
 											href="${contextPath}/produto/${produto.id}">Detalhes</a>

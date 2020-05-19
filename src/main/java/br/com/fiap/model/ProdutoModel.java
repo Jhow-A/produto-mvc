@@ -23,6 +23,8 @@ public class ProdutoModel {
 	@NotEmpty
 	@NotBlank
 	private String caracteristicas;
+	
+	private CategoriaModel categoria;
 
 	public ProdutoModel() {}
 	
@@ -84,4 +86,13 @@ public class ProdutoModel {
 		this.caracteristicas = caracteristicas;
 	}
 
+	public CategoriaModel getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(CategoriaModel categoria) {
+		this.categoria = categoria;
+	}
+
+	
 }

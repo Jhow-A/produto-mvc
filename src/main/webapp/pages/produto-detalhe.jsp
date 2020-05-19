@@ -10,7 +10,7 @@
     <title>Produtos - Detalhe</title>
     
     <spring:url value="/resources/css" var="css"/>
-    <spring:url value="/sresources/js" var="js"/>
+    <spring:url value="/resources/js" var="js"/>
     
     <c:set value="${pageContext.request.contextPath}" var="contextPath"/>
     
@@ -42,27 +42,32 @@
 					
 						<div class="form-group">
 							<label class="control-label" for="nome">Nome:</label>
-							<b>${produto.nome }</b>
+							<b>${produto.nome}</b>
                         </div>
                         
                         <div class="form-group">
 							<label class="control-label" for="nome">SKU:</label>
-							<label class="label label-default">${produto.sku }</label>
+							<label class="label label-default">${produto.sku}</label>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label" for="categoria">Categoria:</label>
+							<label class="label label-default">${produto.categoria.nomeCategoria}</label>
 						</div>
 						
 						<div class="form-group">
 							<label class="control-label" for="mesnagem">Descrição:</label>
-							<label class="label label-default">${produto.descricao }</label>
+							<label class="label label-default">${produto.descricao}</label>
 						</div>
 						
 						<div class="form-group">
 							<label class="control-label" for="preco">Preço:</label>
-							<label class="label label-default">${produto.preco }</label>
+							<label class="label label-default">${produto.preco}</label>
 						</div>
 						
 						<div class="form-group">
 							<label class="control-label" for="mesnagem">Características:</label>
-							<label class="label label-default">${produto.caracteristicas }</label>
+							<label class="label label-default">${produto.caracteristicas}</label>
 						</div>
 						<hr>
 						

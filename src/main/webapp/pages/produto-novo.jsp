@@ -48,9 +48,16 @@
 							<font color="red"><form:errors path="nome"></form:errors></font><br/>
                         </div>
                         <div class="form-group">
-							<label class="control-label" for="nome">SKU:</label>
+							<label class="control-label" for="sku">SKU:</label>
 							<form:input path="sku" id="sku" name="sku" value="" class="form-control" maxlength="50" size="50" />
 							<font color="red"><form:errors path="sku"></form:errors></font><br/>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label" for="categoria">Categoria:</label>
+							<form:select path="categoria.idCategoria" class="form-control">
+								<form:options items="${categorias}" itemLabel="nomeCategoria" itemValue="idCategoria"/>
+							</form:select>
 						</div>
 						
 						<div class="form-group">
